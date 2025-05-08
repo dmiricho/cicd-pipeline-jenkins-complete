@@ -12,6 +12,7 @@ pipeline {
             steps {
                 echo 'Installing Gradle 7.6'
                 sh '''
+                    apt-get update && apt-get install -y wget unzip
                     wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
                     unzip -q gradle-${GRADLE_VERSION}-bin.zip
                 '''
