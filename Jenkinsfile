@@ -3,25 +3,12 @@ pipeline {
     environment {
         //be sure to replace "bhavukm" with your own Docker Hub username
         DOCKER_IMAGE_NAME = "dmiricho/train-schedule"
-        GRADLE_VERSION = "7.6"
-        GRADLE_HOME = "${WORKSPACE}/gradle-${GRADLE_VERSION}"
-        PATH = "${GRADLE_HOME}/bin:${env.PATH}"
     }
     stages {
-        stage('Install Gradle') {
-            steps {
-                echo 'Installing Gradle 7.6'
-                sh '''
-                    apt-get update && apt-get install -y wget unzip
-                    wget https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
-                    unzip -q gradle-${GRADLE_VERSION}-bin.zip
-                '''
-            }
-        }
         stage('Build') {
             steps {
                 echo 'Running build automation'
-                sh 'gradle build --no-daemon'
+                sh './gradlew build --no-daemon'
                 archiveArtifacts artifacts: 'dist/trainSchedule.zip'
             }
         }
